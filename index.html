@@ -8,13 +8,15 @@
 <body>
   <div id="container">
     <div id="info" class="warning"></div>
+    <h3>/ pushstate</h3>
     <p>
-    <a href="/pushstate/_design/pushstate/_rewrite/push/one">one</a>
+    <a href="/push/one">/one</a>
     |
-    <a href="/pushstate/_design/pushstate/_rewrite/push/two">two</a>
+    <a href="/push/two">/two</a>
     |
-    <a href="/pushstate/_design/pushstate/_rewrite/push/three">three</a>
+    <a href="/push/three">/three</a>
     </p>
+    <h3># hashchange</h3>
     <p>
     <a href="#/push/one">#one</a>
     |
@@ -22,9 +24,19 @@
     |
     <a href="#/push/three">#three</a>
     </p>
+    <h3>unspecified (determined by browser support)</h3>
+    <p>
+    <a href="push/one">one</a>
+    |
+    <a href="push/two">two</a>
+    |
+    <a href="push/three">three</a>
+    </p>
     <strong>You're at</strong>
-    <div id="at">nothing</div>
-    <ul id="log"></ul>
+    <h3 id="at" class="success">nothing</h3>
+    <ul id="log">
+      <li><em>Page Load</em></li>
+    </ul>
   </div>
   <script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 </body>
