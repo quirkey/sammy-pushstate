@@ -6,5 +6,5 @@
     "production": {
       "db": "http://aq:DeeZ,Nuts@aq.couchone.com/pushstate"
     }
-  }
+  } 
 }

@@ -218,6 +218,7 @@
     this.app = app;
     // set is native to false and start the poller immediately
     this.is_native = false;
+    this.has_history = _has_history;
     this._startPolling(run_interval_every);
   };
 
@@ -233,45 +234,36 @@
 
     // bind the proxy events to the current app.
     bind: function() {
-      var proxy = this, app = this.app;
+      var proxy = this, app = this.app, lp = Sammy.DefaultLocationProxy;
       $(window).bind('hashchange.' + this.app.eventNamespace(), function(e, non_native) {
         // if we receive a native hash change event, set the proxy accordingly
         // and stop polling
         if (proxy.is_native === false && !non_native) {
           Sammy.log('native hash change exists, using');
           proxy.is_native = true;
-          window.clearInterval(Sammy.DefaultLocationProxy._interval);
+          window.clearInterval(lp._interval);
         }
         app.trigger('location-changed');
       });
       if (_has_history) {
-        Sammy.log('has history!');
         // bind to popstate
         $(window).bind('popstate.' + this.app.eventNamespace(), function(e) {
-          Sammy.log('popstate', e);
           app.trigger('location-changed');
         });
         // bind to link clicks that have routes
         $('a').live('click.history-' + this.app.eventNamespace(), function(e) {
-          try {
-            var full_path = Sammy.DefaultLocationProxy.fullPath(this);
-            e.preventDefault();
-            Sammy.log('click.history', this.hostname, window.location.hostname, this.pathname, 'full_path', app.lookupRoute('get', this.href));
+          var full_path = lp.fullPath(this);
           if (this.hostname == window.location.hostname && app.lookupRoute('get', full_path)) {
             e.preventDefault();
             proxy.setLocation(full_path);
-            app.trigger('location-changed');
+            return false;
           }
-          } catch(r) {
-            console.error(r);
-          }
-          return false;
         });
       }
-      if (!Sammy.DefaultLocationProxy._bindings) {
-        Sammy.DefaultLocationProxy._bindings = 0;
+      if (!lp._bindings) {
+        lp._bindings = 0;
       }
-      Sammy.DefaultLocationProxy._bindings++;
+      lp._bindings++;
     },
 
     // unbind the proxy events from the current app
@@ -292,11 +284,21 @@
 
     // set the current location to `new_location`
     setLocation: function(new_location) {
-      // HTML5 History exists and new_location is a full path
-      if (_has_history && /^\//.test(new_location)) {
-        return history.pushState({ path: new_location }, window.title, new_location);
-      } else {
-        return (window.location = new_location);
+      if (/^([^#\/]|$)/.test(new_location)) { // non-prefixed url
+        if (_has_history) {
+          new_location = '/' + new_location;
+        } else {
+          new_location = '#!/' + new_location;
+        }
+      }
+      if (new_location != this.getLocation()) {
+        // HTML5 History exists and new_location is a full path
+        if (_has_history && /^\//.test(new_location)) {
+          history.pushState({ path: new_location }, window.title, new_location);
+          this.app.trigger('location-changed');
+        } else {
+          return (window.location = new_location);
+        }
       }
     },
 

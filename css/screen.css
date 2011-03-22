@@ -1,1 +1,5 @@
-body {}
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+  margin: 10px;
+}
