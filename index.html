@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>pushstate</title>
+
+  <link href="css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <div id="container">
+    <p>
+    <a href="/pushstate/_design/pushstate/_rewrite/push/one">one</a>
+    |
+    <a href="/pushstate/_design/pushstate/_rewrite/push/two">two</a>
+    |
+    <a href="/pushstate/_design/pushstate/_rewrite/push/three">three</a>
+    </p>
+    <p>
+    <a href="#/push/one">#one</a>
+    |
+    <a href="#/push/two">#two</a>
+    |
+    <a href="#/push/three">#three</a>
+    </p>
+    <strong>You're at</strong>
+    <div id="at">nothing</div>
+    <ul id="log"></ul>
+  </div>
+  <script src="js/default.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>
