@@ -11,6 +11,10 @@
     "to": "js/:file"
   },
   {
+    "from": "*/css/:file",
+    "to": "css/:file"
+  },
+  {
     "from": "/push/*",
     "to": "index.html"
   },

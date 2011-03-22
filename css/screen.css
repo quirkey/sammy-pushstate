@@ -3,3 +3,22 @@ body {
   color: #333;
   margin: 10px;
 }
+
+em {
+  color: #CCC;
+}
+
+#info {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #CCC;
+  font-weight: bold;
+}
+
+.warning {
+  background: red;
+  color: #FFF;
+}
+.success {
+  color: green;
+}
