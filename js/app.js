@@ -21,9 +21,15 @@
       $('#at').text(this.params.push_id);
     });
 
-    this.bind('run', function() {
+    this.bind('run', function(e) {
+      var ctx = this;
       $('a').click(function() {
         clicked = $(this);
+        if (clicked.hasClass('unspecific')) {
+          e.preventDefault();
+          ctx.redirect(clicked.attr('href'));
+          return false;
+        }
       });
 
       var info = "Your browser <strong>" + navigator.userAgent + "<strong> ";
