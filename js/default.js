@@ -9106,6 +9106,7 @@ window.jQuery = window.$ = jQuery;
   var app = $.sammy('#container', function() {
     this.use('Couch');
 
+    alert('HERE!');
     var clicked = false;
     this.before(function() {
       var log = this.path;
